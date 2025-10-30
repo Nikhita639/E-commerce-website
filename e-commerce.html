@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+html {
+scroll-behavior: smooth;
+}
+header {
+display: flex;
+justify-content: space-evenly;
+align-items: center;
+height: 60px;
+width: 100%;
+background: black;
+}
+.heading ul {
+display: flex;
+}
+.logo a {
+color: white;
+transition-duration: 1s;
+font-weight: 800;}
+.logo a:hover {
+color: rgb(240, 197, 6);
+transition-duration: 1s;}
+.heading ul li {
+list-style: none;}
+.heading ul li a {
+margin: 5px;
+text-decoration: none;
+color: black;
+font-weight: 500;
+position: relative;
+color: white;
+margin: 2px 14px;
+font-size: 18px;
+transition-duration: 1s;}
+.heading ul li a:active {
+color: red;}
+.heading ul li a:hover {
+color: rgb(243, 168, 7);
+transition-duration: 1s;}
+.heading ul li a::before {
+content: "";
+height: 2px;
+width: 0px;
+position: absolute;
+left: 0;
+bottom: 0;
+background-color: white;
+transition-duration: 1s;}
+.heading ul li a:hover::before {
+width: 100%;
+transition-duration: 1s;
+background-color: rgb(243, 168, 7);}
+#input {
+height: 30px;
+width: 300px;
+text-decoration: none;
+border: 0px;
+padding: 5px;}
+.logo a {
+color: white;
+font-size: 35px;
+font-weight: 500;
+text-decoration: none;}
+ion-icon {
+width: 30px;
+height: 30px;
+background-color: white;
+color: black;}
+ion-icon:hover {
+cursor: pointer;}
+.search a {
+display: flex;}
+header a ion-icon {
+position: relative;
+right: 3px;}
+.cart-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    z-index: 100;}
+  .cart-icon {
+    cursor: pointer;
+    font-size: 24px;}
+  .cart-items {
+    display: none;
+    max-height: 300px;
+    overflow-y: auto;}
+  .cart-container:hover .cart-items {
+    display: block;}
+  .filters {
+    margin: 20px;
+    display: flex;
+    gap: 10px;
+  }
+  .search, .price-filter {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  .rating {
+    color: gold;
+    margin: 5px 0;
+  }
+  .rating span {
+    cursor: pointer;
+  }
+  .rating span:hover {
+    color: orange;
+  }
+.img-slider img {
+height: 720px;
+width: 1080px;
+}
+/* Update your CSS for responsive grid */
+.items-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .items {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    transition: transform 0.3s;
+  }
+  
+  .items:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  .img img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  .wishlist-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .wishlist-btn.active {
+    color: red;
+  }
+  .items-container {
+    max-height: 80vh; /* Adjust based on your needs */
+    overflow-y: auto;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #888 #f1f1f1; /* For Firefox */
+  }
+  
+  /* Custom scrollbar for Chrome/Safari */
+  .items-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .items-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .items-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  
+  .items-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  /* Make sure items have consistent height */
+  .items {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .img img {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+  }
+  /* Wishlist Toggle Button */
+.wishlist-toggle {
+    position: fixed;
+    top: 20px;
+    right: 100px; /* Adjust based on your cart button */
+    background: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .wishlist-count {
+    background: red;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+  
+  /* Wishlist Panel */
+  .wishlist-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 350px;
+    height: 100vh;
+    background: white;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+    transition: right 0.3s ease;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .wishlist-panel.active {
+    right: 0;
+  }
+  
+  .wishlist-header {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .close-wishlist {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .wishlist-items {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 15px;
+  }
+  
+  .wishlist-item {
+    display: flex;
+    gap: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f5f5f5;
+  }
+  
+  .wishlist-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+  }
+  
+  .wishlist-item-info {
+    flex-grow: 1;
+  }
+  
+  .wishlist-item-price {
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  
+  .remove-item {
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    cursor: pointer;
+  }
+  
+  .wishlist-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 99;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  
+  .wishlist-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .items {
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .highlight {
+    animation: highlight 2s;
+  }
+  
+  @keyframes highlight {
+    0% { box-shadow: 0 0 0 3px rgba(0,150,255,0.5); }
+    100% { box-shadow: none; }
+  }
+  .items {
+    display: block; /* Show all products by default */
+    transition: opacity 0.5s ease-in-out;
+}
+.hidden {
+    display: none;
+}
+
+@keyframes slide {
+0% {
+left: 0px;
+}
+15% {
+left: 0px;
+}
+20% {
+left: -1080px;
+}
+32% {
+left: -1080px;
+}
+35% {
+left: -2160px;
+}
+47% {
+left: -2160px;
+}
+50% {
+left: -3240px;
+}
+63% {
+left: -3240px;
+}
+66% {
+left: -4320px;
+}
+79% {
+left: -4320px;
+}
+82% {
+left: -5400px;
+}
+100% {
+left: 0px;
+}
+}
+.img-slider {
+display: flex;
+float: left;
+position: relative;
+width: 1080px;
+height: 720px;
+animation-name: slide;
+animation-duration: 30s;
+animation-iteration-count: infinite;
+transition-duration: 5s;
+}
+
+.heading1 {
+opacity: 0;
+}
+.search {
+display: flex;
+position: relative;
+}
+.section1 {
+width: 1080px;
+overflow: hidden;
+
+justify-content: center;
+align-items: center;
+margin: 0px auto;
+}
+
+.section2 .container {
+display: flex;
+width: 100%;
+height: max-content;
+flex-wrap: wrap;
+justify-content: center;
+margin: 10px auto;
+}
+.section2 .container .items {
+margin: 10px;
+width: 200px;
+height: 300px;
+background-color: white;
+border: 2.5px solid black;
+border-radius: 12px;
+}
+.section2 .container .items .name {
+text-align: center;
+background-color: rgb(240, 197, 6);
+height: 25px;
+padding-top: 4px;
+color: white;
+margin: 0;
+}
+.section2 .container .items .price {
+float: left;
+padding-left: 10px;
+display: block;
+width: 100%;
+color: rgb(255, 0, 0);
+font-weight: 650;
+}
+.section2 .container .items .info {
+padding-left: 10px;
+color: rgb(243, 168, 7);
+}
+.section2 .container .items .img img {
+width: 200px;
+height: 200px;
+margin: 0;
+padding: 0;
+border-radius: 12px;
+transition-duration: 0.8s;
+}
+.section2 .container .items .img {
+overflow: hidden;
+margin: 0;
+}
+.section2 .container .items:hover .img img {
+transform: scale(1.2);
+transition-duration: 0.8s;
+border-radius: 12px;
+}
+footer {
+display: flex;
+flex-direction: column;
+background-color: black;
+align-items: center;
+color: white;
+}
+
+.footer1 {
+display: flex;
+flex-direction: column;
+align-items: center;
+color: white;
+margin-top: 15px;
+}
+.social-media {
+display: flex;
+justify-content: center;
+color: white;
+flex-wrap: wrap;
+}
+.social-media a {
+color: white;
+margin: 20px;
+border-radius: 5px;
+margin-top: 10px;
+color: white;
+}
+.social-media a ion-icon {
+color: white;
+background-color: black;
+}
+.social-media a:hover ion-icon {
+color: red;
+transform: translateY(5px);
+}
+.footer2 {
+display: flex;
+width: 100%;
+justify-content: space-evenly;
+align-items: center;
+text-decoration: none;
+flex-wrap: wrap;
+}
+.footer0 {
+font-weight: 1200;
+transition-duration: 1s;
+}
+.footer0:hover {
+color: rgb(243, 168, 7);
+}
+.footer2 .heading {
+font-weight: 900;
+font-size: 18px;
+}
+.footer3 {
+margin-top: 60px;
+margin-bottom: 20px;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+}
+.footer2 .heading:hover {
+color: rgb(243, 168, 7);
+}
+.footer2 .div:hover {
+transform: scale(1.05);
+}
+.footer3 h4 {
+margin: 0 10px;
+}
+.footer2 div {
+margin: 10px;
+}
+.menu {
+visibility: hidden;
+}
+.heading1 .ham:active {
+color: red;
+}
+.items {
+overflow: hidden;
+}
+.ham,
+.close {
+cursor: pointer;
+}
+
+@media screen and (max-width: 1250px) {
+.heading ul li {
+display: none;
+}
+
+.items {
+transform: scale(0.9);
+}
+.img-slider img {
+height: 60vw;
+width: 80vw;
+}
+.ham:active {
+color: red;
+}
+.menu {
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.menu a ion-icon {
+position: absolute;
+}
+.highlight {
+    background-color: yellow;
+    transition: background-color 0.5s ease-in-out;
+}
+
+@keyframes slide1 {
+0% {
+left: 0vw;
+}
+15% {
+left: 0vw;
+}
+20% {
+left: -80vw;
+}
+32% {
+left: -80vw;
+}
+35% {
+left: -160vw;
+}
+47% {
+left: -160vw;
+}
+50% {
+left: -240vw;
+}
+63% {
+left: -240vw;
+}
+66% {
+left: -320vw;
+}
+79% {
+left: -320vw;
+}
+82% {
+left: -400vw;
+}
+100% {
+left: 0vw;
+}
+}
+.menu ul {
+display: flex;
+flex-direction: column;
+position: absolute;
+width: 100vw;
+height: 100vh;
+background-color: black;
+left: 0;
+top: 0;
+z-index: 11;
+align-items: center;
+justify-content: center;
+opacity: 1;
+}
+.close {
+z-index: 34;
+
+color: white;
+background-color: black;
+}
+.close:active {
+color: red;
+}
+.menu ul li {
+list-style: none;
+margin: 20px;
+border-top: 3px solid white;
+width: 80%;
+text-align: center;
+
+padding-top: 10px;
+}
+.menu ul li a {
+text-decoration: none;
+padding-top: 10px;
+color: white;
+font-weight: 900;
+}
+.menu ul li a:hover {
+color: rgb(240, 197, 6);
+}
+.img-slider {
+display: flex;
+float: left;
+position: relative;
+width: 80%;
+height: 60%;
+animation-name: slide1;
+animation-duration: 10s;
+animation-iteration-count: infinite;
+transition-duration: 2s;
+}
+.section1 {
+width: 80%;
+overflow: hidden;
+
+justify-content: center;
+align-items: center;
+margin: 0px auto;
+}
+
+.heading1 {
+opacity: 1;
+position: relative;
+bottom: 8px;
+}
+.search a {
+display: flex;
+flex-wrap: nowrap;
+}
+
+.heading1 .ham {
+background-color: black;
+color: white;
+}
+#input {
+width: 200px;
+flex-shrink: 2;
+}
+header {
+height: 150px;
+}
+}
+@media screen and (max-width: 550px) {
+.heading ul li {
+display: none;
+}
+.heading1 {
+opacity: 1;
+
+bottom: 8px;
+}
+
+header {
+height: 250px;
+flex-wrap: wrap;
+display: flex;
+flex-direction: column;
+}
+#input {
+width: 150px;
+}
+.close {
+z-index: 34;
+}
+
+.search a {
+display: flex;
+flex-wrap: nowrap;
+}
+}
+
+</style>
+<link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+</head>
+
+<body>
+<header>
+<div class="cart-container">
+    <div class="cart-icon">🛒 <span class="cart-count">0</span></div>
+    <div class="cart-items"></div>
+    <div class="cart-total">Total: ₹0</div>
+    <!-- Add this near the top of your page (in header or near cart) -->
+   
+    </div>
+<div class="logo"><a href="#">NK BRANDS</a></div>
+<div class="menu">
+<a href="#">
+<ion-icon name="close" class="close"></ion-icon>
+</a>
+
+<ul>
+<li><a href="#" class="under">HOME</a></li>
+<li><a href="#" class="under">SHOP</a></li>
+<li><a href="#" class="under">OUR PRODUCTS</a></li>
+<li><a href="#" class="under">CONTACT US</a></li>
+<li><a href="#" class="under">ABOUT US</a></li>
+
+</ul>
+</div>
+<input type="text" id="searchBox" placeholder="search products">
+<button id="searchBtn">🔍</button> 
+<div class="heading">
+<ul>
+<li><a href="#" class="under">HOME</a></li>
+<li><a href="#section2" class="under">SHOP</a></li>
+<li><a href="#section2" class="under">OUR PRODUCTS</a></li>
+<li><a href="#footer" class="under">CONTACT US</a></li>
+<li><a href="#footer" class="under">ABOUT US</a></li>
+</ul>
+</div>
+<div class="heading1">
+<ion-icon name="menu" class="ham"></ion-icon>
+</div>
+</header>
+<section>
+<div class="section">
+<div class="section1">
+<div class="img-slider">
+<img src="https://images.pexels.com/photos/6347888/pexels-photo-6347888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="" class="img">
+<img src="https://images.pexels.com/photos/3962294/pexels-photo-3962294.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="" class="img">
+<img src="https://images.pexels.com/photos/2292953/pexels-photo-2292953.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" class="img">
+<img src="https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="" class="img">
+<img src="https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="" class="img">
+</div>
+
+</div>
+<div class="filters">  
+    
+  <select class="price-filter">
+    <option value="">All Prices</option>
+    <option value="500">Under ₹500</option>
+    <option value="1000">Under ₹1,000</option>
+    <option value="5000">Under ₹5,000</option>
+    <option value="10000">Under ₹10,000</option>
+    <option value="15000">Under ₹15,000</option>
+    <option value="20000">Under ₹20,000</option>
+    <option value="1000000">Above ₹20,000</option>
+  </select>
+  <button id="submit">Submit</button> 
+</div>
+<button class="wishlist-toggle">
+    ❤️ Wishlist <span class="wishlist-count">0</span>
+  </button>
+  
+  <!-- Wishlist panel that will appear when clicked -->
+  <div class="wishlist-panel">
+    <div class="wishlist-header">
+      <h3>Your Wishlist</h3>
+      <button class="close-wishlist">×</button>
+    </div>
+    <div class="wishlist-items">
+      <!-- Items will appear here dynamically -->
+      <p class="empty-message">Your wishlist is empty</p>
+    </div>
+  </div>
+  <div class="wishlist-overlay"></div>
+<div id="section2" class="section2">
+<div class="container">
+<div class="items" >
+<button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img1"><img src="https://images.pexels.com/photos/1464625/pexels-photo-1464625.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt=""></div>
+<div class="name">SHOES</div>
+<div class="price" price="415">₹415 </div>
+<div class="info">Comfortable footwear for all occasions.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items">
+    <button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img2"><img src="https://cantabilshop.com/cdn/shop/files/600x434_shirts.jpg?v=1729333773" alt=""></div>
+<div class="name">MEN's T-SHIRT</div>
+<div class="price"  price="525">₹525</div>
+<div class="info">Premium cotton t-shirts for men.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items" >
+<button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img3"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJLr0j8MizfcvRO3DTXWpUpS-ecLt6qRn3LQ&s" alt=""></div>
+<div class="name">JEANS</div>
+<div class="price" price="745">₹745</div>
+<div class="info">Stylish denim jeans for everyday wear.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items">
+    <button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img1"><img src="https://images.pexels.com/photos/8839887/pexels-photo-8839887.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt=""></div>
+<div class="name">WATCH</div>
+<div class="price" price="750">₹750</div>
+<div class="info">Elegant timepieces for men and women.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items">
+    <button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img1"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ4V6tLiJucaBrSEBUwNOlIrUctXMUi2MuXg&s" alt=""></div>
+<div class="name">SMART PHONE</div>
+<div class="price" price="8000">₹8,000</div>
+<div class="info">Latest smartphones with advanced features.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items">
+    <button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img1"><img src="https://images.pexels.com/photos/5552789/pexels-photo-5552789.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt=""></div>
+<div class="name">TELEVISION</div>
+<div class="price" price="12,000">₹12,000</div>
+<div class="info">High-definition smart TVs for your home.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items">
+    <button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img1"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUmfNYNxoiEwRR2SSWWBRExdC9p4GdhJD5NQ&s" alt=""></div>
+<div class="name">HOODIES</div>
+<div class="price" price="500">₹500</div>
+<div class="info">Warm and comfortable hoodies for winter.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items">
+    <button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img1"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhGz0mbOvta6gcwnrXTlhRaGBV90X6Alzzug&s" alt=""></div>
+<div class="name">DINNER SET</div>
+<div class="price" price="830">₹830</div>
+<div class="info">Elegant dinnerware set for 6 persons.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items">
+    <button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img1"><img src="https://images.pexels.com/photos/6463348/pexels-photo-6463348.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""></div>
+<div class="name">BLANKETS</div>
+<div class="price" price="820">₹820</div>
+<div class="info">Soft and cozy blankets for cold nights.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items">
+    <button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img1"><img src="https://images.pexels.com/photos/2659939/pexels-photo-2659939.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""></div>
+<div class="name">LAPTOP</div>
+<div class="price" price="50,000">₹50,000</div>
+<div class="info">High-performance laptops for work and gaming.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items">
+    <button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img1"><img src="data:image/jpeg;base64,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" alt=""></div>
+<div class="name">MICROWAVE</div>
+<div class="price" price="9,000">₹9,000</div>
+<div class="info">Compact microwave oven for quick heating.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items">
+    <button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img1"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIOnSOtoMX5wWAftkm7tc0hLr0WX9E0zZzrA&s" alt=""></div>
+<div class="name">COFFEE MAKER</div>
+<div class="price" price="5,400">₹5,400</div>
+<div class="info">Automatic coffee maker for perfect brews.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items">
+    <button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img1"><img src="https://images.pexels.com/photos/6606354/pexels-photo-6606354.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""></div>
+<div class="name">BED</div>
+<div class="price" price="8,300">₹8,300</div>
+<div class="info">Queen size bed with premium mattress.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items">
+    <button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img1"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVk6Z5zX6Xbjqi4oto1OqEQHAdal36Ys-EXg&s" alt=""></div>
+<div class="name">AIR CONDITIONER</div>
+<div class="price" price="6,475">₹6,475</div>
+<div class="info">Energy-efficient 1.5 ton split AC.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items">
+    <button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img1"><img src="https://images.pexels.com/photos/5834/nature-grass-leaf-green.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt=""></div>
+<div class="name">BOOK</div>
+<div class="price" price="745">₹745</div>
+<div class="info">Bestselling novels and educational books.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items">
+    <button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img1"><img src="https://images.pexels.com/photos/4339598/pexels-photo-4339598.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt=""></div>
+<div class="name">BAG</div>
+<div class="price" price="3030">₹3,030</div>
+<div class="info">Stylish bags for work and travel.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items">
+    <button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img1"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMFZwbAEzUQN0EO4r4WMeveYCZqoj5EDU40g&s" alt=""></div>
+<div class="name">SAREES</div>
+<div class="price" price="2125">₹2,125</div>
+<div class="info">Traditional Indian sarees in various designs.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+<div class="items">
+    <button class="wishlist-btn">❤️ Wishlist </button>
+<div class="img img1"><img src="https://images.pexels.com/photos/5816934/pexels-photo-5816934.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt=""></div>
+<div class="name">WASHING MACHINE</div>
+<div class="price" price="14650">₹14,650</div>
+<div class="info">Fully automatic front-load washing machine.</div>
+<div class="rating">
+  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <span class="rating-text">(0)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+<footer>
+<div id="footer" class="footer0">
+<h1>NK BRANDS</h1>
+</div>
+<div class="footer1 ">
+Connect with us at<div class="social-media">
+<a href="#">
+<ion-icon name="logo-facebook"></ion-icon>
+</a>
+<a href="#">
+<ion-icon name="logo-linkedin"></ion-icon>
+</a>
+<a href="#">
+<ion-icon name="logo-youtube"></ion-icon>
+</a>
+<a href="#">
+<ion-icon name="logo-instagram"></ion-icon>
+</a>
+<a href="#">
+<ion-icon name="logo-twitter"></ion-icon>
+</a>
+</div>
+</div>
+<div class="footer2">
+<div class="product">
+<div class="heading">Products</div>
+<div class="div">Sell your Products</div>
+<div class="div">Advertise</div>
+<div class="div">Pricing</div>
+<div class="div">Product Buisness</div>
+
+</div>
+<div class="services">
+<div class="heading">Services</div>
+<div class="div">Return</div>
+<div class="div">Cash Back</div>
+<div class="div">Affiliate Marketing</div>
+<div class="div">Others</div>
+</div>
+<div class="Company">
+<div class="heading">Company</div>
+<div class="div">Complaint</div>
+<div class="div">Careers</div>
+<div class="div">Affiliate Marketing</div>
+<div class="div">Support</div>
+</div>
+<div class="Get Help">
+<div class="heading">Get Help</div>
+<div class="div">Help Center</div>
+<div class="div">Privacy Policy</div>
+<div class="div">Terms</div>
+<div class="div">Login</div>
+</div>
+</div>
+<div class="footer3">Copyright © <h4>NK BRAND</h4> 2025-2040</div>
+</footer>
+<script>
+let cart = [];
+const cartCount = document.querySelector('.cart-count');
+const cartItems = document.querySelector('.cart-items');
+const cartTotal = document.querySelector('.cart-total');
+
+document.querySelectorAll('.items').forEach(item => {
+  const addBtn = document.createElement('button');
+  addBtn.textContent = 'Add to Cart';
+  addBtn.className = 'add-to-cart';
+  item.appendChild(addBtn);
+  
+  addBtn.addEventListener('click', () => {
+    const name = item.querySelector('.name').textContent;
+    const price = item.querySelector('.price').textContent;
+    cart.push({name, price});
+    updateCart();
+  });
+});
+
+function updateCart() {
+  cartCount.textContent = cart.length;
+  
+  cartItems.innerHTML = '';
+  let total = 0;
+  
+  cart.forEach(product => {
+    const item = document.createElement('div');
+    item.textContent = `${product.name} - ${product.price}`;
+    cartItems.appendChild(item);
+    
+    total += parseFloat(product.price.replace('₹', '').replace(',', ''));
+  });
+  
+  cartTotal.textContent = `Total: ₹${total.toLocaleString('en-IN')}`;
+}
+document.getElementById("searchBtn").addEventListener("click", function () {
+    let searchQuery = document.getElementById("searchBox").value.trim().toLowerCase();
+    let items = document.querySelectorAll(".items"); // Adjust to match your product structure
+
+    let exactMatch = null;
+    let relatedItems = [];
+
+    items.forEach(item => {
+        let productNameElement = item.querySelector(".name"); // Ensure this matches your product name class
+        if (productNameElement) {
+            let productName = productNameElement.textContent.trim().toLowerCase();
+            
+            item.classList.remove("highlight"); // Remove previous highlights
+
+            if (productName === searchQuery) {
+                exactMatch = item;
+            } else if (productName.includes(searchQuery)) {
+                relatedItems.push(item);
+            }
+        }
+    });
+
+    if (exactMatch) {
+        exactMatch.classList.add("highlight");
+        exactMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else if (relatedItems.length > 0) {
+        alert("Exact item not found! Showing related items.");
+        relatedItems.forEach(item => {
+            item.classList.add("highlight");
+            item.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+    } else {
+        alert("No related items found. Try a different keyword!");
+    }
+});
+document.getElementById("submit").addEventListener("click", function () {
+    let selectedPrice = document.getElementById("price-filter").value;
+    let products = document.querySelectorAll(".items");
+
+    products.forEach(product => {
+        let productPrice = parseInt(product.getAttribute("price"));
+
+        if (selectedPrice === "" || productPrice <= parseInt(selectedPrice)) {
+            product.classList.remove("hidden"); // Show matching products
+        } else {
+            product.classList.add("hidden"); // Hide non-matching products
+        }
+    });
+});
+
+
+  // Wishlist functionality
+const wishlist = [];
+const wishlistToggle = document.querySelector('.wishlist-toggle');
+const wishlistPanel = document.querySelector('.wishlist-panel');
+const wishlistItems = document.querySelector('.wishlist-items');
+const wishlistCount = document.querySelector('.wishlist-count');
+const wishlistOverlay = document.querySelector('.wishlist-overlay');
+
+// Toggle wishlist panel
+wishlistToggle.addEventListener('click', () => {
+  wishlistPanel.classList.add('active');
+  wishlistOverlay.classList.add('active');
+});
+
+// Close wishlist panel
+document.querySelector('.close-wishlist').addEventListener('click', closeWishlist);
+wishlistOverlay.addEventListener('click', closeWishlist);
+
+function closeWishlist() {
+  wishlistPanel.classList.remove('active');
+  wishlistOverlay.classList.remove('active');
+}
+
+// Add to wishlist functionality
+document.querySelectorAll('.wishlist-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const item = this.closest('.items');
+    const itemId = item.querySelector('.name').textContent;
+    
+    // Check if item already exists
+    const existingIndex = wishlist.findIndex(i => i.id === itemId);
+    
+    if (existingIndex === -1) {
+      // Add to wishlist
+      wishlist.push({
+        id: itemId,
+        name: item.querySelector('.name').textContent,
+        price: item.querySelector('.price').textContent,
+        image: item.querySelector('img').src
+      });
+      this.classList.add('active');
+      this.textContent = '❤️';
+    } else {
+      // Remove from wishlist
+      wishlist.splice(existingIndex, 1);
+      this.classList.remove('active');
+      this.textContent = '♡';
+    }
+    
+    updateWishlist();
+  });
+});
+
+function updateWishlist() {
+  // Update count
+  wishlistCount.textContent = wishlist.length;
+  
+  // Update items list
+  if (wishlist.length === 0) {
+    wishlistItems.innerHTML = '<p class="empty-message">Your wishlist is empty</p>';
+    return;
+  }
+  
+  wishlistItems.innerHTML = '';
+  wishlist.forEach(item => {
+    const wishlistItem = document.createElement('div');
+    wishlistItem.className = 'wishlist-item';
+    wishlistItem.innerHTML = `
+      <img src="${item.image}" alt="${item.name}">
+      <div class="wishlist-item-info">
+        <div>${item.name}</div>
+        <div class="wishlist-item-price">${item.price}</div>
+      </div>
+      <button class="remove-item" data-id="${item.id}">×</button>
+    `;
+    wishlistItems.appendChild(wishlistItem);
+  });
+  
+  // Add remove functionality
+  document.querySelectorAll('.remove-item').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const itemId = this.getAttribute('data-id');
+      const index = wishlist.findIndex(i => i.id === itemId);
+      if (index !== -1) {
+        wishlist.splice(index, 1);
+        
+        // Also update the original button
+        document.querySelectorAll('.items').forEach(item => {
+          if (item.querySelector('.name').textContent === itemId) {
+            const btn = item.querySelector('.wishlist-btn');
+            btn.classList.remove('active');
+            btn.textContent = '♡';
+          }
+        });
+        
+        updateWishlist();
+      }
+    });
+  });
+}
+</script>
+<script>
+document.querySelector('.search').addEventListener('input', filterProducts);
+document.querySelector('.price-filter').addEventListener('change', filterProducts);
+
+function filterProducts() {
+  const searchTerm = document.querySelector('.search').value.toLowerCase();
+  const priceLimit = document.querySelector('.price-filter').value;
+  
+  document.querySelectorAll('.items').forEach(item => {
+    const name = item.querySelector('.name').textContent.toLowerCase();
+    const price = parseFloat(item.querySelector('.price').textContent.replace('₹', '').replace(',', ''));
+    
+    const nameMatch = name.includes(searchTerm);
+    const priceMatch = !priceLimit || price <= priceLimit;
+    
+    item.style.display = (nameMatch && priceMatch) ? 'block' : 'none';
+  });
+}
+</script>
+<script>
+document.querySelectorAll('.wishlist-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('active');
+    btn.textContent = btn.classList.contains('active') ? '❤️ Added' : '❤️ Wishlist';
+  });
+});
+</script>
+
+<script>
+document.querySelectorAll('.rating').forEach(rating => {
+  const stars = rating.querySelectorAll('span:not(.rating-text)');
+  const ratingText = rating.querySelector('.rating-text');
+  
+  stars.forEach((star, index) => {
+    star.addEventListener('click', () => {
+      stars.forEach((s, i) => {
+        s.textContent = i <= index ? '★' : '☆';
+      });
+      ratingText.textContent = `(${index + 1})`;
+    });
+  });
+});
+</script>
+<script>
+    document.querySelector('.search').addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase();
+      filterProducts();
+      
+      // If search term exists, find and scroll to first match
+      if (searchTerm) {
+        const items = document.querySelectorAll('.items');
+        for (let item of items) {
+          const name = item.querySelector('.name').textContent.toLowerCase();
+          if (name.includes(searchTerm)) {
+            // Scroll to product
+            item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Highlight temporarily
+            item.style.boxShadow = '0 0 0 3px rgba(0,150,255,0.5)';
+            setTimeout(() => {
+              item.style.boxShadow = '';
+            }, 2000);
+            break;
+          }
+        }
+      }
+    });  
+    document.querySelector('.price-filter').addEventListener('change', filterProducts); 
+    function filterProducts() {
+      const searchTerm = document.querySelector('.search').value.toLowerCase();
+      const priceLimit = document.querySelector('.price-filter').value;
+      document.querySelectorAll('.items').forEach(item => {
+        const name = item.querySelector('.name').textContent.toLowerCase();
+        const price = parseFloat(item.querySelector('.price').textContent.replace('₹', '').replace(',', '')); 
+        const nameMatch = name.includes(searchTerm);
+        const priceMatch = !priceLimit || price <= priceLimit;    
+        item.style.display = (nameMatch && priceMatch) ? 'block' : 'none';
+      });
+    }
+    // Optional: Add URL parameter support for direct linking
+    window.addEventListener('load', function() {
+      const params = new URLSearchParams(window.location.search);
+      const searchParam = params.get('search');
+      if (searchParam) {
+        document.querySelector('.search').value = searchParam;
+        document.querySelector('.search').dispatchEvent(new Event('input'));
+      }
+    });
+    // Optional: Update URL when searching
+    document.querySelector('.search').addEventListener('input', function() {
+      const searchTerm = this.value;
+      const url = new URL(window.location);
+      if (searchTerm) {
+        url.searchParams.set('search', searchTerm);
+      } else {
+        url.searchParams.delete('search');
+      }
+      window.history.pushState({}, '', url);
+    });
+    </script>
+<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+<script>
+const close = document.querySelector(".close");
+const open = document.querySelector(".ham");
+const menu = document.querySelector(".menu");
+close.addEventListener("click", () => {
+menu.style.visibility = "hidden";
+});
+open.addEventListener("click", () => {
+menu.style.visibility = "visible";
+});
+</script>
+</body>
+</html>
+Published by Nikhita Kanta
